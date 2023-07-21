@@ -1,0 +1,8 @@
+<a href="{% url 'posts:index' %}">Atr&aacute;s</a>
+<h1>{{post.title}}</h1>
+<b>{{post.author.username}} | {{post.created_at}} | {{post.updated_at}}</b>
+<h3>{{post.short_description}}</h3>
+<div>
+    <img src="{{post.image.url}}" alt="">
+</div>
+<p>{{post.content}}</p>

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -32,3 +33,7 @@ class Post(models.Model):
     
     def __str__(self) -> str:
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse('posts:view', args=[self.pk])
+    
