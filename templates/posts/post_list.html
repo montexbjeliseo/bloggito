@@ -1,0 +1,7 @@
+{% for post in posts %}
+<h1>{{post.title}}</h1>
+<p>{{post.short_description}}</p>
+<hr>
+{% empty %}
+<h1>No hay articulos para mostrar</h1>
+{% endfor %}
