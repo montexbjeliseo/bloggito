@@ -1,0 +1,6 @@
+<a href="{% url 'posts:index' %}">Atr&aacute;s</a>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <p><button type="submit">Actualizar Publicación</button></p>
+</form>
