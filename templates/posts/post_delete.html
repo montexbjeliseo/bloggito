@@ -1,0 +1,8 @@
+<a href="{% url 'posts:index' %}">Cancelar</a>
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>
+        Estás seguro de que deseas borrar {{post}}?
+    </p>
+    <p><button type="submit">Confirmar</button></p>
+</form>

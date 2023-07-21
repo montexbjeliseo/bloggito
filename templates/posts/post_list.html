@@ -2,7 +2,8 @@
 {% for post in posts %}
 <h1>{{post.title}}</h1>
 <p>{{post.short_description}}</p>
-<a href="{{post.get_absolute_url}}">Ver detalles</a>
+<a href="{{post.get_absolute_url}}">Ver detalles</a> |
+<a href="{{post.get_delete_url}}">Eliminar</a>
 <hr>
 {% empty %}
 <h1>No hay articulos para mostrar</h1>

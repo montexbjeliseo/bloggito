@@ -37,3 +37,6 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('posts:view', args=[self.pk])
     
+    def get_delete_url(self):
+        return reverse('posts:delete', args=[self.pk])
+    
