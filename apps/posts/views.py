@@ -3,7 +3,6 @@ from .models import *
 from .forms import *
 from django.urls import reverse_lazy
 from apps.comments.forms import *
-from django.shortcuts import redirect
 
 class PostListView(ListView):
     model = Post
