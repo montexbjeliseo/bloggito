@@ -1,7 +1,7 @@
-<h2>Ya hay una sesión activa</h2>
+<h2>Hay una sesión activa</h2>
 <form action="{% url 'logout' %}?next={{next}}" method="POST">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{next}}">
-    <p>¿Desea cerrar sesion para iniciar en otra cuenta?</p>
+    <p>¿Desea cerrar sesión?</p>
     <button type="submit">Cerrar sesion</button>
 </form>
