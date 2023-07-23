@@ -11,11 +11,6 @@ class Category(models.Model):
     def __str__(self) -> str:
         return self.name
     
-    @classmethod
-    def get_default(cls):
-        default_category, _ = cls.objects.get_or_create(name='Sin Categoría')
-        return default_category
-    
 class Tag(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -33,7 +28,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now=True, editable=False)
     updated_at = models.DateTimeField(auto_now_add=True, editable=False)
     author = models.ForeignKey(get_user_model(), null=True, on_delete=models.SET_NULL)
-    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL, default=Category.get_default())
+    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     tags = models.ManyToManyField(Tag)
     
     def __str__(self) -> str:

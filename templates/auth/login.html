@@ -1,0 +1,7 @@
+<form action="" method="POST">
+    <h1>Iniciar Sesión</h1>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{next}}">
+    {{form}}
+    <button type="submit">Iniciar sesion</button>
+</form>
