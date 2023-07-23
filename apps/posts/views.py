@@ -3,6 +3,7 @@ from .models import *
 from .forms import *
 from django.urls import reverse_lazy
 from apps.comments.forms import *
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 class PostListView(ListView):
     model = Post
@@ -19,23 +20,32 @@ class PostDetailView(DetailView):
         context['postcomment_form'] = PostCommentForm()
         return context
     
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
     template_name = 'posts/post_create.html'
     form_class = PostForm
     
-class PostDeleteView(DeleteView):
+    def test_func(self):
+        return self.request.user.is_staff
+    
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'posts/post_delete.html'
     success_url = reverse_lazy('posts:index')
     
-class PostUpdateView(UpdateView):
+    def test_func(self):
+        return self.request.user.is_staff
+    
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     template_name = 'posts/post_update.html'
     success_url = reverse_lazy('posts:index')
     form_class = PostForm
     
-class PostCommentCreateView(FormView):
+    def test_func(self):
+        return self.request.user.is_staff
+    
+class PostCommentCreateView(LoginRequiredMixin, FormView):
     form_class = PostCommentForm
     template_name = 'posts/post_detail.html'
 
@@ -52,7 +62,7 @@ class PostCommentCreateView(FormView):
     def get_success_url(self):
          return reverse('posts:view', args=[self.kwargs['pk']])
      
-class PostCommentDeleteView(DeleteView):
+class PostCommentDeleteView(LoginRequiredMixin, DeleteView):
     model = PostComment
     template_name = 'posts/comments/delete.html'
     pk_url_kwarg = 'cpk'
@@ -60,7 +70,7 @@ class PostCommentDeleteView(DeleteView):
     def get_success_url(self):
          return reverse('posts:view', args=[self.kwargs['pk']])
      
-class PostCommentUpdateView(UpdateView):
+class PostCommentUpdateView(LoginRequiredMixin, UpdateView):
     model = PostComment
     template_name = 'posts/comments/update.html'
     form_class = PostCommentForm
