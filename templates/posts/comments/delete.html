@@ -1,0 +1,8 @@
+<a href="{{postcomment.post.get_absolute_url}}">Cancelar</a>
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>
+        Estás seguro de que deseas borrar el comentario "{{postcomment.text}}"?
+    </p>
+    <p><button type="submit">Confirmar</button></p>
+</form>

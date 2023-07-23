@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from apps.posts.models import Post
+from django.urls import reverse
 
 class PostComment(models.Model):
     text = models.TextField(max_length=300)
@@ -11,3 +12,6 @@ class PostComment(models.Model):
     
     def __str__(self) -> str:
         return f"{self.author.username}: {self.text[:50]}"
+    
+    def get_delete_url(self):
+        return reverse('posts:delete_comment', args=[self.post.pk, self.pk])

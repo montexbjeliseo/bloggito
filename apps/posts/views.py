@@ -51,3 +51,11 @@ class CommentCreateView(FormView):
     
     def get_success_url(self):
          return reverse('posts:view', args=[self.kwargs['pk']])
+     
+class CommentDeleteView(DeleteView):
+    model = PostComment
+    template_name = 'posts/comments/delete.html'
+    pk_url_kwarg = 'cpk'
+    
+    def get_success_url(self):
+         return reverse('posts:view', args=[self.kwargs['pk']])
