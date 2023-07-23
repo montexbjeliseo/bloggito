@@ -4,6 +4,8 @@
     <b>{{postcomment.author}}</b> 
     {% if user == postcomment.author %}
     <a href="{{postcomment.get_update_url}}">Actualizar</a>
+    {% endif %}
+    {% if user == postcomment.author or user.is_staff %}
     <a href="{{postcomment.get_delete_url}}">Eliminar</a>
     {% endif %}
     <p>
