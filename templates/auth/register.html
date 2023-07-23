@@ -1,0 +1,9 @@
+<form action="" method="POST">
+    <h1>Registro</h1>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{next}}">
+    {{form}}
+    <p>
+        <button type="submit">Registrarse</button>
+    </p>
+</form>
