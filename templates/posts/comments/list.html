@@ -1,0 +1,12 @@
+<h2>Comentarios</h2>
+{% for postcomment in post.postcomment_set.all %}
+<div>
+    <b>{{postcomment.author}}</b>
+    <p>
+        {{postcomment.text}}
+    </p>
+    <hr>
+</div>
+{% empty %}
+<p><i>No hay comentarios</i></p>
+{% endfor %}

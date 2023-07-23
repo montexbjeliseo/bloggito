@@ -1,0 +1,17 @@
+{% if user.is_authenticated %}
+<form method="POST" action="{{post.get_add_comment_url}}">
+    {% csrf_token %}
+    <h3>Deja un comentario</h3>
+    <input type="hidden" name="author" value="{{user.pk}}">
+
+    <div>
+        {{postcomment_form}}
+    </div>
+    <div><button type="submit">
+        Comentar
+        </button></div>
+</form>
+
+{% else %}
+<p>Para comentar debes <a href="#">Iniciar sesión</a></p>
+{% endif %}
