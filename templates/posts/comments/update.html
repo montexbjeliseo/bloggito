@@ -1,0 +1,17 @@
+<a href="{{postcomment.post.get_absolute_url}}">Cancelar</a>
+{% if user.is_authenticated %}
+<form method="POST" action="{{post.get_add_comment_url}}">
+    {% csrf_token %}
+    <h3>Actualizar comentario</h3>
+
+    <div>
+        {{form}}
+    </div>
+    <div><button type="submit">
+        Actualizar
+        </button></div>
+</form>
+
+{% else %}
+<p>Para comentar debes <a href="#">Iniciar sesión</a></p>
+{% endif %}

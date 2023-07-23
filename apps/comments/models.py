@@ -15,3 +15,6 @@ class PostComment(models.Model):
     
     def get_delete_url(self):
         return reverse('posts:delete_comment', args=[self.post.pk, self.pk])
+    
+    def get_update_url(self):
+        return reverse('posts:update_comment', args=[self.post.pk, self.pk])

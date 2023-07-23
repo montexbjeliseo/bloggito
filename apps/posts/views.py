@@ -35,7 +35,7 @@ class PostUpdateView(UpdateView):
     success_url = reverse_lazy('posts:index')
     form_class = PostForm
     
-class CommentCreateView(FormView):
+class PostCommentCreateView(FormView):
     form_class = PostCommentForm
     template_name = 'posts/post_detail.html'
 
@@ -52,9 +52,18 @@ class CommentCreateView(FormView):
     def get_success_url(self):
          return reverse('posts:view', args=[self.kwargs['pk']])
      
-class CommentDeleteView(DeleteView):
+class PostCommentDeleteView(DeleteView):
     model = PostComment
     template_name = 'posts/comments/delete.html'
+    pk_url_kwarg = 'cpk'
+    
+    def get_success_url(self):
+         return reverse('posts:view', args=[self.kwargs['pk']])
+     
+class PostCommentUpdateView(UpdateView):
+    model = PostComment
+    template_name = 'posts/comments/update.html'
+    form_class = PostCommentForm
     pk_url_kwarg = 'cpk'
     
     def get_success_url(self):
