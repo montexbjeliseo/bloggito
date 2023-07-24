@@ -1,6 +1,17 @@
-<a href="{% url 'posts:index' %}">Atr&aacute;s</a>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
-    <p><button type="submit">Crear Publicación</button></p>
-</form>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+Crear nuevo articulo
+{% endblock title %}
+
+{% block content %}
+<main class="container">
+    <h1 class="mt-5">Crear nuevo articulo</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+        <p><button class="btn btn-success" type="submit">Crear Publicación</button> <a class="btn btn-secondary"
+                href="{% url 'posts:index' %}">Cancelar</a></p>
+    </form>
+</main>
+{% endblock content %}
