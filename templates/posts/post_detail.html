@@ -1,11 +1,19 @@
-<a href="{% url 'posts:index' %}">Atr&aacute;s</a>
-<h1>{{post.title}}</h1>
-<b>{{post.author.username}} | {{post.created_at}} | {{post.updated_at}}</b>
-<h3>{{post.short_description}}</h3>
-<div>
-    <img src="{{post.image.url}}" alt="">
-</div>
-<p>{{post.content}}</p>
+{% extends 'base.html' %}
 
-{% include 'posts/comments/list.html' %}
-{% include 'posts/comments/form.html' %}
+{% block title %}
+{{post.title}}
+{% endblock title %}
+
+{% block content %}
+<main class="container">
+    <a class="btn btn-secondary my-2" href="{% url 'posts:index' %}">Atr&aacute;s</a>
+    <h1 class="mt-5">{{post.title}}</h1>
+    <b>{{post.author.username}} | {{post.created_at}} | {{post.updated_at}}</b>
+    <p>{{post.short_description}}</p>
+    <img class="img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
+    <p>{{post.content}}</p>
+
+    {% include 'posts/comments/list.html' %}
+    {% include 'posts/comments/form.html' %}
+</main>
+{% endblock content %}

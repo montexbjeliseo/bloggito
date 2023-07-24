@@ -1,15 +1,15 @@
+{% load crispy_forms_tags %}
 {% if user.is_authenticated %}
 <form method="POST" action="{{post.get_add_comment_url}}">
     {% csrf_token %}
     <h3>Deja un comentario</h3>
     <input type="hidden" name="author" value="{{user.pk}}">
-
     <div>
-        {{postcomment_form}}
+        {{postcomment_form|crispy}}
     </div>
-    <div><button type="submit">
-        Comentar
-        </button></div>
+    <div>
+        <button type="submit" class="btn btn-success">Comentar</button>
+    </div>
 </form>
 
 {% else %}
