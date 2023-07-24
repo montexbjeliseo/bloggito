@@ -1,15 +1,29 @@
-{% if user.is_staff %}
-<a href="{% url 'posts:create' %}">Nueva Publicación</a>
-{% endif %}
-{% for post in posts %}
-<h1>{{post.title}}</h1>
-<p>{{post.short_description}}</p>
-<a href="{{post.get_absolute_url}}">Ver detalles</a>
-{% if user.is_staff %}
-<a href="{{post.get_update_url}}">Update</a>
-<a href="{{post.get_delete_url}}">Eliminar</a>
-{% endif %}
-<hr>
-{% empty %}
-<h1>No hay articulos para mostrar</h1>
-{% endfor %}
+{% extends 'base.html' %}
+{% block title %} Articulos {% endblock title %}
+{% block content %}
+<section class="container">
+    {% if user.is_staff %}
+    <a class="btn btn-success my-3" href="{% url 'posts:create' %}"><i class="fa-solid fa-plus"></i> Nueva
+        Publicación</a>
+    {% endif %}
+    {% for post in posts %}
+    <article class="card  mb-4">
+        
+        <div class="card-body">
+            <h2 class="mt-5">{{post.title}}</h2>
+            <p>{{post.short_description}}</p>
+            <hr>
+            <a class="btn btn-primary" href="{{post.get_absolute_url}}">Ver detalles</a>
+            {% if user.is_staff %}
+            <a class="btn btn-secondary" href="{{post.get_update_url}}">Actualizar</a>
+            <a class="btn btn-danger" href="{{post.get_delete_url}}">Eliminar</a>
+            {% endif %}
+            
+        </div>
+    </article>
+        {% empty %}
+        <h1>No hay articulos para mostrar</h1>
+    
+    {% endfor %}
+</section>
+{% endblock content %}
