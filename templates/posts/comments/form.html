@@ -13,5 +13,5 @@
 </form>
 
 {% else %}
-<p>Para comentar debes <a href="#">Iniciar sesión</a></p>
+<p>Para comentar debes <a href="{% url 'login' %}?next={{post.get_absolute_url}}">Iniciar sesión</a></p>
 {% endif %}
