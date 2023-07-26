@@ -1,4 +1,5 @@
-<form class="d-flex">
-    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+<form class="d-flex" method="GET" action="{% url 'posts:index' %}">
+    {% csrf_token %}
+    <input name="q" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
     <button class="btn btn-outline-success" type="submit">Buscar</button>
 </form>

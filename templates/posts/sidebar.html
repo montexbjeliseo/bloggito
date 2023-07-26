@@ -12,7 +12,7 @@
                         <li><a href="{% url 'posts:index' %}" class="d-inline-flex align-items-center rounded">Todos los
                                 articulos</a></li>
                         {% for category in categories %}
-                        <li><a href="{% url 'posts:index' %}?category={{category.pk}}"
+                        <li><a href="{{category.get_filterby_link}}"
                                 class="d-inline-flex align-items-center rounded">{{category.name}}</a></li>
                         {% empty %}
                         No hay categorías

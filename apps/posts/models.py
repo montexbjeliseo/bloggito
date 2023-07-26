@@ -11,6 +11,10 @@ class Category(models.Model):
     def __str__(self) -> str:
         return self.name
     
+    def get_filterby_link(self):
+        url = reverse('posts:index')
+        return f"{url}?category={self.pk}"
+    
 class Tag(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
