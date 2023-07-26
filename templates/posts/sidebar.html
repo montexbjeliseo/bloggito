@@ -9,25 +9,28 @@
 
                 <div class="collapse show" id="collapse1">
                     <ul class="list-unstyled fw-normal pb-1 small">
-                        <li><a href="#"
-                                class="d-inline-flex align-items-center rounded">Categoria 1</a></li>
-                        <li><a href="#"
-                                class="d-inline-flex align-items-center rounded">Categoria 2</a></li>
+                        <li><a href="{% url 'posts:index' %}" class="d-inline-flex align-items-center rounded">Todos los
+                                articulos</a></li>
+                        {% for category in categories %}
+                        <li><a href="{% url 'posts:index' %}?category={{category.pk}}"
+                                class="d-inline-flex align-items-center rounded">{{category.name}}</a></li>
+                        {% empty %}
+                        No hay categorías
+                        {% endfor %}
                     </ul>
                 </div>
             </li>
             <li class="mb-1">
                 <button class="btn d-inline-flex align-items-center rounded" data-bs-toggle="collapse"
                     data-bs-target="#collapse2" aria-expanded="true">
-                    Fechas
+                    Ordenar por
                 </button>
 
                 <div class="collapse show" id="collapse2">
                     <ul class="list-unstyled fw-normal pb-1 small">
-                        <li><a href="#"
-                                class="d-inline-flex align-items-center rounded">Fecha 1</a></li>
-                        <li><a href="#"
-                                class="d-inline-flex align-items-center rounded">FEcha 2</a></li>
+                        <li><a href="#" class="d-inline-flex align-items-center rounded">Más reciente</a></li>
+                        <li><a href="#" class="d-inline-flex align-items-center rounded">Más destacados</a></li>
+                        <li><a href="#" class="d-inline-flex align-items-center rounded">Más antiguos</a></li>
                     </ul>
                 </div>
             </li>

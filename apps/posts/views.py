@@ -11,12 +11,36 @@ from .forms import *
 from django.urls import reverse_lazy
 from apps.comments.forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 
 
 class PostListView(ListView):
     model = Post
     template_name = "posts/post_list.html"
     context_object_name = "posts"
+    
+    def get_queryset(self):
+        queryset = Post.objects.all().order_by('-created_at')
+        
+        qset = []
+        
+        category = self.request.GET.get('category', '')
+        q = self.request.GET.get('q', '')
+        
+        if category:
+            qset.append(Q(category__id=category))
+            
+        if q:
+            qset.append(Q(title__icontains=q))    
+
+        queryset = queryset.filter(*qset)
+        
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
 
 
 class PostDetailView(DetailView):
