@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'index' %}">Bloggito</a>
+            <a class="navbar-brand" href="{% url 'index' %}">{{app_name}}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -21,8 +21,9 @@
                             Articulos
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Categoria 1</a></li>
-                            <li><a class="dropdown-item" href="#">Categoria 2</a></li>
+                            {% for category in categories %}
+                            <li><a class="dropdown-item" href="{{category.get_filterby_link}}">{{category}}</a></li>
+                            {% endfor %}
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
