@@ -2,9 +2,10 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView, TemplateView
 from django.contrib.auth import get_user_model, login
 from .forms import *
+from .models import *
 
 
 class AuthLoginView(UserPassesTestMixin, LoginView):
@@ -17,8 +18,7 @@ class AuthLoginView(UserPassesTestMixin, LoginView):
     def handle_no_permission(self):
         return redirect(f"{reverse_lazy('confirm_logout')}?next={self.login_url}")
 
-
-class AuthConfirmLogoutView(UserPassesTestMixin, LoginView):
+class AuthConfirmLogoutView(UserPassesTestMixin, TemplateView):
     template_name = "auth/confirm_logout.html"
     
     def test_func(self):
@@ -70,3 +70,11 @@ class AuthLogoutView(UserPassesTestMixin, LogoutView):
     
     def handle_no_permission(self):
         return redirect(reverse_lazy("login"))
+    
+class UserProfileView(DetailView):
+    model = User
+    template_name = 'users/profile.html'
+    context_object_name = 'user_data'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    

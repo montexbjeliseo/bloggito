@@ -5,15 +5,20 @@ Registrarse
 {% endblock title %}
 {% block content %}
 <main class="container">
-    <form action="" method="POST">
-        <h1 class="mt-5">Registro</h1>
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{next}}">
-        {{form|crispy}}
-        <p>
-            <button class="btn btn-success" type="submit">Registrarse</button>
-            <a href="{% url 'login' %}?next={{next}}">Iniciar sesion</a>
-        </p>
-    </form>
+    <div class="row">
+        <div class="col-4">
+            <form action="" method="POST">
+                <h1 class="mt-5">Registro</h1>
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{next}}">
+                {{form|crispy}}
+                <p>
+                    <button class="btn btn-success" type="submit">Registrarse</button>
+                    <a href="{% url 'login' %}?next={{next}}">Iniciar sesion</a>
+                </p>
+            </form>
+        </div>
+        {% include 'auth/lorem.html' %}
+    </div>
 </main>
 {% endblock content %}

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'apps.contacts',
     "crispy_forms",
     "crispy_bootstrap5",
+    "blog",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

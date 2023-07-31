@@ -25,7 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', BlogIndexView.as_view(), name='index'),
     path('posts/', include('apps.posts.urls')),
-    path('auth/', include('apps.users.urls')),
+    path('', include('apps.users.urls')),
     path('contacts/', include('apps.contacts.urls')),
 ]
 

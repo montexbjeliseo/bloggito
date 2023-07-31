@@ -1,0 +1,15 @@
+<article class="card  my-3">
+    
+    <div class="card-body">
+        <h2 class="mt-5">{{post.title}}</h2>
+        <p>{{post.short_description}}</p>
+        <p>By <a href="{{post.author.get_absolute_url}}"><b>{{post.author}}</b></a></p>
+        <hr>
+        <a class="btn btn-primary" href="{{post.get_absolute_url}}">Ver detalles</a>
+        {% if user.is_staff %}
+        <a class="btn btn-secondary" href="{{post.get_update_url}}">Actualizar</a>
+        <a class="btn btn-danger" href="{{post.get_delete_url}}">Eliminar</a>
+        {% endif %}
+
+    </div>
+</article>
