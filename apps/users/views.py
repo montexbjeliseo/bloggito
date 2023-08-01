@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
@@ -27,7 +28,12 @@ class AuthConfirmLogoutView(UserPassesTestMixin, TemplateView):
     def handle_no_permission(self):
         return redirect(reverse_lazy("login"))
 
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["next"] = self.request.GET.get('next', '')
+        return context
+    
+    
 class AuthRegisterUserView(UserPassesTestMixin, CreateView):
     model = get_user_model()
     template_name = "auth/register.html"
@@ -60,7 +66,7 @@ class AuthLogoutView(UserPassesTestMixin, LogoutView):
     
     def get_success_url(self) -> str:
         success_url = super().get_success_url()
-        next_page = self.request.GET.get("next")
+        next_page = self.request.GET.get("next", '')
         if next_page:
             success_url = next_page
         return success_url
