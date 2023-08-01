@@ -1,6 +1,7 @@
 {% load path_tags %}
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'index' %}">{{app_name}}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -49,4 +50,5 @@
             </div>
         </div>
     </nav>
+    {% include 'includes/messages.html' %}
 </header>

@@ -25,6 +25,7 @@ class Category(models.Model):
     def get_filterby_link(self):
         url = reverse("posts:index")
         return f"{url}?category={self.pk}"
+    
 
 
 class Tag(models.Model):

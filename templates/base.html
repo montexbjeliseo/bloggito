@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es-ar">
 {% load static %}
+
 <head>
     <title> {{app_name}} - {% block title %} Inicio {% endblock title %}</title>
     <!-- Required meta tags -->
@@ -29,6 +30,13 @@
         integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
         </script>
     <script src="https://kit.fontawesome.com/779b11c23d.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Ocultar el alert después de un tiempo de espera utilizando jQuery
+        $(document).ready(function () {
+            $('#messages').delay(5000).fadeOut('slow');
+        });
+    </script>
 </body>
 
 </html>
