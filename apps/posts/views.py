@@ -12,6 +12,8 @@ from django.urls import reverse_lazy
 from apps.comments.forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 
 class PostListView(ListView):
@@ -30,19 +32,14 @@ class PostListView(ListView):
 
         if q:
             qset = (
-                Q(title__icontains=q) |
-                Q(author__first_name__icontains=q) |
-                Q(category__name__icontains=q)
+                Q(title__icontains=q)
+                | Q(author__first_name__icontains=q)
+                | Q(category__name__icontains=q)
             )
-            
-            queryset = queryset.filter(qset)
-            
-        return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()
-        return context
+            queryset = queryset.filter(qset)
+
+        return queryset
 
 
 class PostDetailView(DetailView):
@@ -53,6 +50,9 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["postcomment_form"] = PostCommentForm()
+        post = self.get_object()
+        post.views += 1
+        post.save()
         return context
 
 
@@ -63,6 +63,10 @@ class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.is_staff
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -129,3 +133,14 @@ class PostCommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
         cpk = self.kwargs["cpk"]
         comment = PostComment.objects.get(pk=cpk)
         return self.request.user == comment.author
+
+
+@login_required
+def like_post(request, pk):
+    if request.method == "POST":
+        post = Post.objects.get(pk=pk)
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+    return redirect("posts:view", pk)

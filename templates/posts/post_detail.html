@@ -14,7 +14,7 @@
     <p>{{post.short_description}}</p>
     <img class="img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
     <p>{{post.content}}</p>
-
+    {% include 'posts/post_likes.html' %}
     {% include 'posts/comments/list.html' %}
     {% include 'posts/comments/form.html' %}
 </main>

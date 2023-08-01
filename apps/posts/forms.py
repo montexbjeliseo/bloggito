@@ -5,4 +5,4 @@ class PostForm(forms.ModelForm):
     
     class Meta:
         model = Post
-        exclude = ['created_at', 'updated_at']
+        exclude = ['created_at', 'updated_at', 'likes', 'author', 'views']
