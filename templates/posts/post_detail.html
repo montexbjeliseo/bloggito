@@ -14,7 +14,7 @@
     <b>{{post.author.username}} | {{post.created_at}} | {{post.updated_at}}</b>
     <p>{{post.short_description}}</p>
     <img class="img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
-    <p>{{post.content}}</p>
+    <p>{{post.content|safe}}</p>
     {% include 'posts/post_likes.html' %}
     {% include 'posts/comments/list.html' %}
     {% include 'posts/comments/form.html' %}
