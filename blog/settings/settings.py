@@ -2,8 +2,9 @@ import os
 from pathlib import Path
 from django.urls import reverse_lazy
 
-from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv())
+from dotenv import load_dotenv
+env_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(env_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
