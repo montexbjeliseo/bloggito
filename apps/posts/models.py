@@ -60,6 +60,7 @@ class Post(models.Model):
     image = models.ImageField(
         upload_to='posts',
         null=True,
+        blank=True,
         verbose_name="Imagen relacionada",
         help_text="Selecciona una imagen relacionada para mostrar como portada del artículo",
     )

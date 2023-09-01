@@ -13,7 +13,9 @@
     <h1 class="mt-5">{{post.title}}</h1>
     <b>{{post.author.username}} | {{post.created_at}} | {{post.updated_at}}</b>
     <p>{{post.short_description}}</p>
+    {% if post.image %}
     <img class="img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
+    {% endif %}
     <p>{{post.content|safe}}</p>
     {% include 'posts/post_likes.html' %}
     {% include 'posts/comments/list.html' %}
