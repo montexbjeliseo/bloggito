@@ -6,6 +6,9 @@ Acerca de {{user_data.username}}
 
 {% block content %}
 <main class="container">
-    <h1>Acerca de {{user_data.username|upper}}</h1>
+    <h1>Acerca de {{user_data.username|title}}</h1>
+    {% if user_data.username == user.username and user_data %}
+    
+    {% endif %}
 </main>
 {% endblock content %}

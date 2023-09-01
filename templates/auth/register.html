@@ -6,7 +6,7 @@ Registrarse
 {% block content %}
 <main class="container">
     <div class="row">
-        <div class="col-4">
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
             <form action="" method="POST">
                 <h1 class="mt-5">Registro</h1>
                 {% csrf_token %}
@@ -14,11 +14,15 @@ Registrarse
                 {{form|crispy}}
                 <p>
                     <button class="btn btn-success" type="submit">Registrarse</button>
+                </p>
+                <p>
                     <a href="{% url 'login' %}?next={{next}}">Iniciar sesion</a>
+                </p>
+                <p>
+                    <a href="{% url 'login' %}?next={{next}}">Recuperar contraseña</a>
                 </p>
             </form>
         </div>
-        {% include 'auth/lorem.html' %}
     </div>
 </main>
 {% endblock content %}

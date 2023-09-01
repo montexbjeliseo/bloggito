@@ -7,17 +7,21 @@ Iniciar sesión
 {% block content %}
 <main class="container">
     <div class="row">
-        <div class="col-4">
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
             <form action="" method="POST">
                 <h1 class="mt-5">Iniciar Sesión</h1>
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{next}}">
                 {{form|crispy}}
                 <button class="btn btn-success" type="submit">Iniciar sesion</button>
-                <a href="{% url 'register' %}?next={{next}}">Crear nueva cuenta</a>
+                <p>
+                    <a href="{% url 'register' %}?next={{next}}">Crear nueva cuenta</a>
+                </p>
+                <p>
+                    <a href="{% url 'password_reset' %}">Recuperar contraseña</a>
+                </p>
             </form>
         </div>
-        {% include 'auth/lorem.html' %}
     </div>
 </main>
 {% endblock content %}
