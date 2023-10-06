@@ -5,9 +5,7 @@ from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nombre de la categoría")
-    description = models.TextField(
-        max_length=250, verbose_name="Descripción", null=True
-    )
+    slug = models.SlugField(unique=True)
     created_at = models.DateTimeField(
         auto_now_add=True, editable=False, verbose_name="Fecha de creación"
     )
@@ -25,6 +23,12 @@ class Category(models.Model):
     def get_filterby_link(self):
         url = reverse("posts:index")
         return f"{url}?category={self.pk}"
+    
+    def get_update_url(self):
+        return reverse('posts:update_category', args=[self.pk])    
+    
+    def get_delete_url(self):
+        return reverse('posts:delete_category', args=[self.pk])
     
 
 

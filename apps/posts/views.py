@@ -144,3 +144,31 @@ def like_post(request, pk):
         else:
             post.likes.add(request.user)
     return redirect("posts:view", pk)
+
+
+class PostCategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Category
+    template_name = 'posts/categories/create.html'
+    form_class = CategoryForm
+    success_url = reverse_lazy('posts:index')
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+class PostCategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Category
+    template_name = 'posts/categories/update.html'
+    form_class = CategoryForm
+    success_url = reverse_lazy('posts:index')
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+class PostCategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Category
+    template_name = "posts/categories/delete.html"
+    success_url = reverse_lazy('posts:index')
+
+    def test_func(self):
+        return self.request.user.is_staff
