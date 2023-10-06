@@ -3,4 +3,5 @@ __pycache__/
 *.env
 env
 .vscode/
-.sqlite3
+*.sqlite3
+media/
