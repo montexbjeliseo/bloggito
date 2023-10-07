@@ -2,7 +2,8 @@
     <div class="card-body">
         <h2 class="mt-5">{{post.title}}</h2>
         <p>{{post.short_description}}</p>
-        <p>By <a href="{{post.author.get_absolute_url}}"><b>{% if post.author %}{{post.author}}{% else %} Anónimo {% endif %}</b></a> - <span
+        <p>By <a href="{{post.author.get_absolute_url}}"><b>{% if post.author %}{{post.author}}{% else %} Anónimo {% endif %}</b></a> in <a href="{{post.category.get_filterby_link}}"><b>
+                        {% if post.category %}{{post.category}}{% else %} Sin categoría {% endif %}</b></a> - <span
                 class="bi {% if user in post.likes.all %}bi-heart-fill text-danger{% else %}bi-heart{%endif%}">{{post.likes.all|length}}</span>
             - <span>Veces abierto: {{post.views}}</span>
             - <span>Comentarios: {{post.postcomment_set.all|length}}</span>
