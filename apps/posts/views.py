@@ -50,10 +50,20 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["postcomment_form"] = PostCommentForm()
-        post = self.get_object()
-        post.views += 1
-        post.save()
         return context
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        post = self.get_object()
+        visited = self.request.COOKIES.get('visited_' + str(post.slug))
+
+        if not visited:
+
+            post.views += 1
+            post.save()
+            response.set_cookie('visited_' + str(post.slug), 'true')
+
+        return response
 
 
 class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -163,6 +173,7 @@ class PostCategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView
 
     def test_func(self):
         return self.request.user.is_staff
+
 
 class PostCategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Category

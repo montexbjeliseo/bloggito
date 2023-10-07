@@ -8,11 +8,21 @@
         <a class="btn btn-success my-3" href="{% url 'posts:create' %}"><i class="fa-solid fa-plus"></i> Nueva
             Publicación</a>
         {% endif %}
+        {% if request.GET.q %}
+        <h1>Resultados para: {{request.GET.q}}</h1>
+        {% elif request.GET.category %}
+        <h1>Artículos en: {{request.GET.category}}</h1>
+        {% endif %}
         {% for post in posts %}
         {% include 'posts/post_card.html' %}
         {% empty %}
-        <h1>No hay articulos para mostrar</h1>
-    
+        {% if request.GET.q %}
+        <h2>No hay resultados para "{{request.GET.q}}"</h2>
+        {% elif request.GET.category %}
+        <h2>No hay articulos en categoría "{{request.GET.category}}"</h2>
+        {% else %}
+        <h2>No hay articulos para mostrar</h2>
+        {% endif %}
         {% endfor %}
     </section>
 </main>
