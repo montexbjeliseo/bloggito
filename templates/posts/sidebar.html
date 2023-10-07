@@ -9,11 +9,13 @@
 
                 <div class="collapse show" id="collapse1">
                     <ul class="list-unstyled fw-normal pb-1 small">
+                        {% if user.is_staff %}
                         <li>
                             <a class="d-inline-flex align-items-center rounded"
                                 href="{% url 'posts:create_category' %}"><i class="fa-solid fa-plus"></i> Nueva
                                 Categoría</a>
                         </li>
+                        {% endif %}
                         <li><a href="{% url 'posts:index' %}" class="d-inline-flex align-items-center rounded">Todos los
                                 articulos</a></li>
                         {% for category in categories %}

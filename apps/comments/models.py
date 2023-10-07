@@ -3,8 +3,10 @@ from django.contrib.auth import get_user_model
 from apps.posts.models import Post
 from django.urls import reverse
 
+import uuid
 
 class PostComment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     text = models.TextField(max_length=300, verbose_name="Contenido del comentario")
     post = models.ForeignKey(
         Post, on_delete=models.CASCADE, verbose_name="Articulo al que pertenece"
@@ -35,7 +37,7 @@ class PostComment(models.Model):
         return f"{self.author.username}: {self.text[:50]}"
 
     def get_delete_url(self):
-        return reverse("posts:delete_comment", args=[self.post.pk, self.pk])
+        return reverse("posts:delete_comment", args=[self.post.slug, self.pk])
 
     def get_update_url(self):
-        return reverse("posts:update_comment", args=[self.post.pk, self.pk])
+        return reverse("posts:update_comment", args=[self.post.slug, self.pk])

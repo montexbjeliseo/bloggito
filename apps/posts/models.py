@@ -4,7 +4,8 @@ from django.urls import reverse
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Nombre de la categoría")
+    name = models.CharField(
+        max_length=100, verbose_name="Nombre de la categoría")
     slug = models.SlugField(unique=True)
     created_at = models.DateTimeField(
         auto_now_add=True, editable=False, verbose_name="Fecha de creación"
@@ -22,19 +23,18 @@ class Category(models.Model):
 
     def get_filterby_link(self):
         url = reverse("posts:index")
-        return f"{url}?category={self.pk}"
-    
+        return f"{url}?category={self.slug}"
+
     def get_update_url(self):
-        return reverse('posts:update_category', args=[self.pk])    
-    
+        return reverse('posts:update_category', args=[self.slug])
+
     def get_delete_url(self):
-        return reverse('posts:delete_category', args=[self.pk])
-    
+        return reverse('posts:delete_category', args=[self.slug])
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Nombre de la etiqueta")
-    description = models.TextField(null=True, verbose_name="Descripción")
+    name = models.CharField(
+        max_length=100, verbose_name="Nombre de la etiqueta")
     created_at = models.DateTimeField(
         auto_now_add=True, editable=False, verbose_name="Fecha de creación"
     )
@@ -51,6 +51,7 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
+    slug = models.SlugField(unique=True)
     title = models.CharField(
         max_length=100,
         verbose_name="Título del Artículo",
@@ -106,16 +107,16 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("posts:view", args=[self.pk])
+        return reverse("posts:view", args=[self.slug])
 
     def get_delete_url(self):
-        return reverse("posts:delete", args=[self.pk])
+        return reverse("posts:delete", args=[self.slug])
 
     def get_update_url(self):
-        return reverse("posts:update", args=[self.pk])
+        return reverse("posts:update", args=[self.slug])
 
     def get_add_comment_url(self):
-        return reverse("posts:add_comment", args=[self.pk])
+        return reverse("posts:add_comment", args=[self.slug])
 
     def get_like_url(self):
-        return reverse("posts:like", args=[self.pk])
+        return reverse("posts:like", args=[self.slug])

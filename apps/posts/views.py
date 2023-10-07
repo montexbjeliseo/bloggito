@@ -28,7 +28,7 @@ class PostListView(ListView):
         q = self.request.GET.get("q", "")
 
         if category:
-            queryset = queryset.filter(Q(category__id=category))
+            queryset = queryset.filter(Q(category__slug=category))
 
         if q:
             qset = (
@@ -93,8 +93,7 @@ class PostCommentCreateView(LoginRequiredMixin, FormView):
     template_name = "posts/post_detail.html"
 
     def form_valid(self, form):
-        post_id = self.kwargs["pk"]
-        post = Post.objects.get(pk=post_id)
+        post = Post.objects.get(slug=self.kwargs["slug"])
         comment = form.save(commit=False)
         comment.author = self.request.user
         comment.post = post
@@ -103,7 +102,7 @@ class PostCommentCreateView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("posts:view", args=[self.kwargs["pk"]])
+        return reverse("posts:view", args=[self.kwargs["slug"]])
 
 
 class PostCommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -112,7 +111,7 @@ class PostCommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView)
     pk_url_kwarg = "cpk"
 
     def get_success_url(self):
-        return reverse("posts:view", args=[self.kwargs["pk"]])
+        return reverse("posts:view", args=[self.kwargs["slug"]])
 
     def test_func(self):
         cpk = self.kwargs["cpk"]
@@ -127,7 +126,7 @@ class PostCommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
     pk_url_kwarg = "cpk"
 
     def get_success_url(self):
-        return reverse("posts:view", args=[self.kwargs["pk"]])
+        return reverse("posts:view", args=[self.kwargs["slug"]])
 
     def test_func(self):
         cpk = self.kwargs["cpk"]
@@ -136,14 +135,14 @@ class PostCommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
 
 
 @login_required
-def like_post(request, pk):
+def like_post(request, slug):
     if request.method == "POST":
-        post = Post.objects.get(pk=pk)
+        post = Post.objects.get(slug=slug)
         if request.user in post.likes.all():
             post.likes.remove(request.user)
         else:
             post.likes.add(request.user)
-    return redirect("posts:view", pk)
+    return redirect("posts:view", slug)
 
 
 class PostCategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
