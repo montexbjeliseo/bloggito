@@ -17,7 +17,7 @@ Confirmar cerrar sesión
                 <input type="hidden" name="next" value="{{next}}">
                 <p>¿Desea cerrar sesión?</p>
                 <button class="btn btn-danger" type="submit">Cerrar sesion</button>
-                <a class="btn btn-secondary" href="{{next}}">Cancerlar</a>
+                <a class="btn btn-secondary" href="{% if next %}{{next}}{%else%}{{go_home}}{%endif%}">Cancerlar</a>
             </form>
         </div>
     </div>
