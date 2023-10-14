@@ -1,11 +1,11 @@
 from typing import Any
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db import transaction
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.template import Template, Context
 from .models import SectionContent
 from .forms import SectionContentForm, ImageFormSet
-
+from .utils import render_template
 
 class BlogIndexView(TemplateView):
     template_name = "index.html"
@@ -18,21 +18,21 @@ class BlogIndexView(TemplateView):
 
         if len(home_section) > 0:
             home_section = home_section.first()
-            context['home_section'] = home_section
-            template = Template(home_section.content)
-            rendered_content = template.render(Context(context))
-            context['home_section_rendered'] = rendered_content
+            context['section_rendered'] = render_template(home_section, context)
         
         return context
 
 
-class SectionContentListView(ListView):
+class SectionContentListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = SectionContent
     template_name = 'sections/list.html'
     context_object_name = 'sections'
+    
+    def test_func(self) -> bool | None:
+        return self.request.user.is_staff
 
 
-class SectionContentCreateView(CreateView):
+class SectionContentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = SectionContent
     form_class = SectionContentForm
     template_name = 'sections/create.html'
@@ -56,17 +56,26 @@ class SectionContentCreateView(CreateView):
                 formset.instance = self.object
                 formset.save()
         return super().form_valid(form)
+    
+    def test_func(self) -> bool | None:
+        return self.request.user.is_staff
 
 
-class SectionContentUpdateView(UpdateView):
+class SectionContentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = SectionContent
     template_name = 'sections/update.html'
     form_class = SectionContentForm
     success_url = reverse_lazy('list_sections')
+    
+    def test_func(self) -> bool | None:
+        return self.request.user.is_staff
 
 
-class SectionContentDeleteView(DeleteView):
+class SectionContentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = SectionContent
     template_name = "sections/delete.html"
     context_object_name = 'section'
     success_url = reverse_lazy('list_sections')
+    
+    def test_func(self) -> bool | None:
+        return self.request.user.is_staff
