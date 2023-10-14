@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "blog",
-    'apps.error_handling'
+    'apps.error_handling',
+    'apps.sections',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

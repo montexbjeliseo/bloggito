@@ -18,12 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import *
 from apps.error_handling.views import *
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', BlogIndexView.as_view(), name='index'),
+    path('', include('apps.sections.urls')),
     path('posts/', include('apps.posts.urls')),
     path('', include('apps.users.urls')),
     path('contacts/', include('apps.contacts.urls')),
