@@ -23,6 +23,22 @@ class BlogIndexView(TemplateView):
         return context
 
 
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        home_section = SectionContent.objects.filter(
+            parent='about')
+
+        if len(home_section) > 0:
+            home_section = home_section.first()
+            context['section_rendered'] = render_template(home_section, context)
+        
+        return context
+
+
 class SectionContentListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = SectionContent
     template_name = 'sections/list.html'

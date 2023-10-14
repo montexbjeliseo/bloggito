@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+  Inicio
+{% endblock %}
+{% block content %}
+  {% if section_rendered %}
+    {{ section_rendered|safe }}
+  {% else %}
+    <main class="container mt-5">
+      <h1>Esto es {{ app_name }}</h1>
+      <p>La página se encuentra en construcción</p>
+    </main>
+  {% endif %}
+{% endblock %}
